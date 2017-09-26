@@ -17,6 +17,8 @@ typedef enum {
 int pam_sm_authenticate(pam_handle_t* pamh, int flags,
                         int argc, const char** argv)
 {
+  if (getenv("SSH_TTY"))
+    return PAM_IGNORE;
   uid_t _uid = geteuid();
   gid_t _gid = getegid();
   seteuid(CURRENT_EUID);
